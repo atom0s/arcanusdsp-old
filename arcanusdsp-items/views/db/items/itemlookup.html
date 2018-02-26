@@ -1,0 +1,71 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<form class="itemLookup" name="itemLookup" ng-init="itemName = ''" ng-controller="itemToolController">
+    <div class="widget widget-blue">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>Find An Item</span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="itemname-addon"><i class="fa fa-diamond"></i></span>
+                    <input type="text" class="form-control" id="itemname" name="itemname" placeholder="Enter an item name (or part of a name)..." aria-describedby="itemname-addon"
+                           ng-minlength="3"
+                           ng-model="itemName" required>
+                </div>
+                <span ng-show="itemLookup.itemname.$error.minlength" class="ng-error">Enter at least 3 characters!</span>
+            </div>
+        </div>
+        <div class="widget-footer">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary btn-xs" ng-click="itemLookup.itemname.$valid && getItemsByName(itemName)" ng-disabled="itemsLookupEnabled == false">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="items != null">
+        <hr />
+        <div id="item-results" class="widget widget-orange">
+            <div class="widget-heading">
+                <div class="widget-title">
+                    <span>Found Items</span>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="noresults" ng-show="items.length == 0">
+                    <span>Sorry, no items found with that name.</span>
+                </div>
+                <div class="list" ng-show="items.length > 0">
+                    <div class="list-item" ng-repeat="i in items | limitTo:10:itemResultsPage*10" repeat-done="refreshTooltips()" ng-cloak>
+                        <a ng-href="http://www.ffxiah.com/item/{{i.id}}">
+                            <img ng-src="https://static.ffxiah.com/images/icon/{{i.id}}.png" width="24" height="24" />
+                        </a>
+                        <a ng-href="/db/items/{{i.id}}/{{i.name}}">{{i.name | cleanNameTitleCase}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-footer text-right">
+                <button class="btn btn-xs btn-primary" ng-disabled="itemResultsPage == 0" ng-click="itemResultsPage=itemResultsPage-1">
+                    Previous
+                </button>
+                {{itemResultsPage+1}} / {{items | pageCount:10}}
+                <button class="btn btn-xs btn-primary" ng-disabled="itemResultsPage >= items.length/10 - 1" ng-click="itemResultsPage=itemResultsPage+1">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/itemtool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/itemtool.js"></script>
+})

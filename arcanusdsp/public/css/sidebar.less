@@ -1,0 +1,153 @@
+/**
+ * arcanus - Copyright (c) 2015-2016 atom0s [atom0s@live.com]
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ *
+ * By using arcanus, you agree to the above license and its terms.
+ *
+ *      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
+ *                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
+ *                    endorses you or your use.
+ *
+ *   Non-Commercial - You may not use the material (arcanus) for commercial purposes.
+ *
+ *   No-Derivatives - If you remix, transform, or build upon the material (arcanus), you may not distribute the
+ *                    modified material. You are, however, allowed to submit the modified works back to the original
+ *                    arcanus project in attempt to have it added to the original project.
+ *
+ * You may not apply legal terms or technological measures that legally restrict others
+ * from doing anything the license permits.
+ *
+ * You may contact me, atom0s, at atom0s@live.com for more information or if you are seeking commercial use.
+ *
+ * No warranties are given.
+ */
+
+//
+// Server Status Widget
+//
+
+#server-status {
+    .offline {
+        background: linear-gradient(135deg, rgba(153, 153, 153, 0) 1%, rgba(242, 46, 46, 0.2) 100%) !important;
+    }
+
+    .online {
+        background: linear-gradient(135deg, rgba(153, 153, 153, 0) 1%, rgba(0, 255, 36, 0.2) 100%) !important;
+    }
+}
+
+//
+// Teamspeak Widget
+//
+
+.teamspeak {
+    .widget-body {
+        border: 0;
+        height: 350px;
+        line-height: 0 !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    .widget-body iframe {
+        background: #FAFAFA;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+//
+// Online Players Widget
+//
+
+.whosonline {
+    .widget-heading {
+        .count {
+            color: lime;
+            display: inline;
+            float: right;
+            font-family: monospace, serif;
+            font-size: 12px;
+            font-style: italic;
+            font-weight: normal;
+            padding-right: 10px;
+            padding-top: 1px;
+            vertical-align: middle;
+        }
+    }
+
+    .widget-body {
+        height: 400px;
+        margin: 0 !important;
+        max-height: 400px;
+        overflow-y: scroll;
+        padding: 0 !important;
+
+        .noplayers {
+            font-style: italic;
+            padding: 5px;
+        }
+    }
+
+    a:hover {
+        color: @color-orange;
+        text-decoration: none;
+    }
+
+    .character {
+        display: block;
+        border-bottom: 1px solid #DDD;
+    }
+
+    .character-wrapper {
+        display: table-row;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+    }
+
+    .character:hover {
+        background: #F6F6F6;
+    }
+
+    .linkshells {
+        display: table-cell;
+        max-width: 16px !important;
+        padding: 5px;
+        width: 16px !important;
+        vertical-align: top;
+
+        div,
+        img {
+            line-height: 0 !important;
+            height: 16px !important;
+            width: 16px !important;
+        }
+    }
+
+    .characterinfo {
+        display: table-cell;
+        padding: 2px 10px;
+        vertical-align: top;
+        width: 100%;
+    }
+
+    .nameflags {
+        display: table-cell;
+        padding-right: 2px;
+        text-align: right;
+        white-space: nowrap;
+        width: auto;
+
+        img {
+            padding: 1px;
+        }
+    }
+
+    .gm {
+        background: linear-gradient(135deg, rgba(153, 153, 153, 0) 50%, rgba(242, 46, 46, 0.2) 100%) !important;
+    }
+}

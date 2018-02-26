@@ -1,0 +1,18 @@
+{
+  "uid": "arcanusdsp-bcnm",
+  "name": "arcanusdsp BCNM",
+  "description": "Exposes a BCNM lookup tool to the arcanusdsp website.",
+  "version": "1.0.0",
+  "author": {
+    "name": "atom0s",
+    "email": "atom0s@live.com",
+    "website": "http://atom0s.com/"
+  },
+  "favicon": "",
+  "entry": "main.js",
+  "dependencies": {
+    "npm": {},
+    "bower": {}
+  },
+  "config": {}
+}

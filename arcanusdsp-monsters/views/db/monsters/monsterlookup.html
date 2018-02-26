@@ -1,0 +1,71 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<form class="monsterLookup" name="monsterLookup" ng-init="monsterName = ''" ng-controller="monsterToolController">
+    <div class="widget widget-blue">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>Find A Monster</span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="monstername-addon"><i class="fa fa-android"></i></span>
+                    <input type="text" class="form-control" id="monstername" name="monstername" placeholder="Enter a monster name (or part of a name)..." aria-describedby="monstername-addon"
+                           ng-minlength="3"
+                           ng-model="monsterName" required>
+                </div>
+                <span ng-show="monsterLookup.monstername.$error.minlength" class="ng-error">Enter at least 3 characters!</span>
+            </div>
+        </div>
+        <div class="widget-footer">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary btn-xs" ng-click="monsterLookup.monstername.$valid && getMonstersByName(monsterName)" ng-disabled="monstersLookupEnabled == false">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="monsters != null">
+        <hr />
+        <div id="monster-results" class="widget widget-orange">
+            <div class="widget-heading">
+                <div class="widget-title">
+                    <span>Found Monsters</span>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="noresults" ng-show="monsters.length == 0">
+                    <span>Sorry, no monsters found with that name.</span>
+                </div>
+                <div class="list" ng-show="monsters.length > 0">
+                    <div class="list-item" ng-repeat="m in monsters | limitTo:10:monsterResultsPage*10" repeat-done="refreshTooltips()" ng-cloak>
+                        <a href="/db/monsters/{{m.mobid}}/{{m.mobname}}">
+                            {{m.polutils_name | cleanNameTitleCase}}
+                        </a>
+                        <span class="zone-name">&bull; {{m.zonename | cleanName}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-footer text-right">
+                <button class="btn btn-xs btn-primary" ng-disabled="monsterResultsPage == 0" ng-click="monsterResultsPage=monsterResultsPage-1">
+                    Previous
+                </button>
+                {{monsterResultsPage+1}} / {{monsters | pageCount:10}}
+                <button class="btn btn-xs btn-primary" ng-disabled="monsterResultsPage >= monsters.length/10 - 1" ng-click="monsterResultsPage=monsterResultsPage+1">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/monstertool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/monstertool.js"></script>
+})

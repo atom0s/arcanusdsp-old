@@ -1,0 +1,107 @@
+/**
+ * arcanus - Copyright (c) 2015-2016 atom0s [atom0s@live.com]
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ *
+ * By using arcanus, you agree to the above license and its terms.
+ *
+ *      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
+ *                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
+ *                    endorses you or your use.
+ *
+ *   Non-Commercial - You may not use the material (arcanus) for commercial purposes.
+ *
+ *   No-Derivatives - If you remix, transform, or build upon the material (arcanus), you may not distribute the
+ *                    modified material. You are, however, allowed to submit the modified works back to the original
+ *                    arcanus project in attempt to have it added to the original project.
+ *
+ * You may not apply legal terms or technological measures that legally restrict others
+ * from doing anything the license permits.
+ *
+ * You may contact me, atom0s, at atom0s@live.com for more information or if you are seeking commercial use.
+ *
+ * No warranties are given.
+ */
+@import 'bootstrap.less';
+@import 'spinner.less';
+@import 'defines.less';
+@import 'widget.less';
+@import 'sidebar.less';
+@import 'header.less';
+@import 'footer.less';
+@import 'account.less';
+@import 'scrollbars.less';
+@import 'tablesorter.less';
+
+html {
+    margin: 0;
+    min-height: 100%;
+    padding: 0;
+}
+
+body {
+    background: @color-background;
+}
+
+hr {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    border: 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 8px;
+    height: 1px;
+}
+
+//
+// Main Content Styles
+//
+
+.wrapper {
+    background: #FFF;
+    border: 1px solid rgba(20, 20, 20, 0.3);
+    border-top: none !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 3px;
+    min-width: @content-min-width;
+    padding: 0 !important;
+    width: @content-width;
+}
+
+.content {
+    padding-top: 0 !important;
+
+    .sidebar {
+        padding-left: 0 !important;
+    }
+}
+
+//
+// Angular Styles
+//
+
+.bg-error {
+    background: @color-red-light !important;
+}
+
+.bg-success {
+    background: @color-green-light !important;
+}
+
+.bg-warning {
+    background: @color-orange-light !important;
+}
+
+.loading {
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+}
+
+.ng-error {
+    color: red;
+    display: block;
+    font-style: italic;
+    padding-top: 5px;
+    text-align: right;
+}

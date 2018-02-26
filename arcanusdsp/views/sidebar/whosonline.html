@@ -1,0 +1,44 @@
+<div class="whosonline" data-ng-init="getOnlineCharacters()">
+    <div class="widget widget-green">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>Current Players</span>
+                <span class="count hidden-xs hidden-sm" title="Online Character Count">({{onlinecharacters.length}})<span style="color: #ff8700;" title="Unique Character Count">({{uniquecharacters}})</span></span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="loading" ng-show="onlinecharacters == null">
+                <div class="spinner-container">
+                    <div class="spinner spinner-bounce-middle"></div>
+                    <span>Loading...</span>
+                </div>
+            </div>
+            <div class="noplayers" ng-show="onlinecharacters && onlinecharacters.length == 0">
+                <span>Can't get player list at this time.</span>
+            </div>
+            <div class="character" ng-repeat="c in onlinecharacters" ng-class="c.gmlevel > 0 ? 'gm' : ''">
+                <div class="character-wrapper">
+                    <div class="linkshells">
+                        <div ng-style="{'background-color': c.ls1color}">
+                            <img ng-src="{{c.ls1rank | linkshellRankToImage}}" alt="{{c.ls1name}}" title="{{c.ls1name}}" width="16" height="16" />
+                        </div>
+                        <div ng-style="{'background-color': c.ls2color}">
+                            <img ng-src="{{c.ls2rank | linkshellRankToImage}}" alt="{{c.ls2name}}" title="{{c.ls2name}}" width="16" height="16" />
+                        </div>
+                    </div>
+                    <div class="characterinfo">
+                        <a ng-href="/db/characters/{{c.charid}}/{{c.charname}}"><strong>{{c.charname}}</strong></a> &bull;
+                        <small>{{c | jobInformation}}</small>
+                        <br />
+                        <em>
+                            <small>{{c.zonename | cleanName}}</small>
+                        </em>
+                    </div>
+                    <div class="nameflags">
+                        <div ng-bind-html="c | nameflagsToImages"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

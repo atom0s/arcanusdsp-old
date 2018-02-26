@@ -1,0 +1,148 @@
+/**
+ * arcanus - Copyright (c) 2015-2016 atom0s [atom0s@live.com]
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ *
+ * By using arcanus, you agree to the above license and its terms.
+ *
+ *      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
+ *                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
+ *                    endorses you or your use.
+ *
+ *   Non-Commercial - You may not use the material (arcanus) for commercial purposes.
+ *
+ *   No-Derivatives - If you remix, transform, or build upon the material (arcanus), you may not distribute the
+ *                    modified material. You are, however, allowed to submit the modified works back to the original
+ *                    arcanus project in attempt to have it added to the original project.
+ *
+ * You may not apply legal terms or technological measures that legally restrict others
+ * from doing anything the license permits.
+ *
+ * You may contact me, atom0s, at atom0s@live.com for more information or if you are seeking commercial use.
+ *
+ * No warranties are given.
+ */
+
+#monster-results {
+    .list {
+        border-left: 1px solid #DDD;
+        border-right: 1px solid #DDD;
+        border-bottom: 1px solid #DDD;
+
+        .list-item {
+            border-top: 1px solid #DDD;
+            display: block;
+            font-weight: Bold;
+            padding: 5px;
+            width: 100%;
+
+            .zone-name {
+                font-style: italic;
+                font-weight: normal;
+            }
+        }
+
+        .list-item a:hover {
+            background: #F5F5F5;
+            color: orange;
+            text-decoration: none;
+        }
+    }
+}
+
+.monster-invalid {
+    padding: 5px;
+}
+
+.monster {
+    color: #555555;
+
+    .monster-main-container {
+        background: #F5F5F5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .monster-container {
+        background: #FFFFFF;
+        margin: 0;
+        padding: 0;
+    }
+
+    .monster-name-container {
+        padding: 5px;
+        vertical-align: middle;
+
+        .name {
+            font-size: 18px;
+            font-variant: small-caps;
+            font-weight: bold;
+        }
+
+        .level {
+            font-size: smaller;
+            font-style: italic;
+        }
+    }
+
+    .monster-stats-container {
+        font-family: "Lucida Console", "Consolas", monospace;
+        font-size: smaller;
+        text-align: left;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .monster-data-container {
+        background: #FFF6C5;
+        font-size: 12px;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        width: 100%;
+
+        .header {
+            background: #FFF6C5;
+            padding: 3px 0 3px 25px;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .value {
+            padding: 3px 0 3px 5px;
+            text-align: left;
+            width: 99%;
+        }
+    }
+
+    .gm-command {
+        background: #F2DEDE;
+
+        input {
+            background: transparent;
+            border: 0;
+        }
+    }
+
+    .monster-drops-table {
+        margin: 0;
+        padding: 0;
+
+        .nodrops {
+            color: red;
+            font-style: italic;
+        }
+
+        th {
+            background: #DFF0D8;
+        }
+
+        .heading {
+            background: #F5F5F5;
+            font-weight: bold;
+            padding: 2px 2px 2px 5px;
+        }
+    }
+}

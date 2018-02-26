@@ -1,0 +1,98 @@
+/**
+ * arcanus - Copyright (c) 2015-2016 atom0s [atom0s@live.com]
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ *
+ * By using arcanus, you agree to the above license and its terms.
+ *
+ *      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
+ *                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
+ *                    endorses you or your use.
+ *
+ *   Non-Commercial - You may not use the material (arcanus) for commercial purposes.
+ *
+ *   No-Derivatives - If you remix, transform, or build upon the material (arcanus), you may not distribute the
+ *                    modified material. You are, however, allowed to submit the modified works back to the original
+ *                    arcanus project in attempt to have it added to the original project.
+ *
+ * You may not apply legal terms or technological measures that legally restrict others
+ * from doing anything the license permits.
+ *
+ * You may contact me, atom0s, at atom0s@live.com for more information or if you are seeking commercial use.
+ *
+ * No warranties are given.
+ */
+
+.footer-top {
+    background: url('../img/footer/footer-top.gif') no-repeat;
+    height: 32px;
+    margin: 10px auto -7px;
+    min-width: @content-min-width;
+    padding: 0;
+    position: relative;
+    width: @content-width;
+    z-index: 1;
+}
+
+footer {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    .outer {
+        background: url('../img/footer/footer-bg.png') repeat;
+        border: 1px solid #000;
+        border-top: 2px solid @color-orange;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: @content-min-width;
+        padding: 0 !important;
+        width: @content-width;
+    }
+
+    .inner {
+        color: #FFFFFF;
+        display: table;
+        height: auto;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+
+        .left {
+            display: table-cell;
+            padding: 15px;
+            width: 70%;
+        }
+
+        .right {
+            background: rgba(0, 0, 0, 0.2);
+            border: 0 !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.4) !important;
+            display: table-cell;
+            font-size: 14px;
+            height: auto;
+            margin: 0;
+            padding: 15px;
+            text-align: center;
+            vertical-align: middle;
+            width: 100%;
+        }
+    }
+
+    a {
+        color: @color-orange;
+        text-decoration: none;
+    }
+    a:hover {
+        color: white;
+        text-decoration: none;
+    }
+
+    i {
+        text-align: center;
+        width: 24px;
+    }
+}

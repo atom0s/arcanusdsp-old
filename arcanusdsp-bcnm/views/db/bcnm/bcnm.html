@@ -1,0 +1,179 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<div class="bcnm" ng-controller="bcnmToolController" data-ng-init="getBcnmById(@model.bcnmid)" ng-cloak>
+    <div class="widget widget-red" ng-show="bcnm == null && bcnmLoading == false">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>An Error Occurred</span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <span>Sorry, but the requested BCNM could not be loaded.</span>
+        </div>
+    </div>
+
+    <div class="loading" ng-show="bcnm == null && bcnmLoading == true" ng-cloak>
+        <div class="spinner-container">
+            <div class="spinner spinner-bounce-middle"></div>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-condensed bcnm-main-container" ng-show="bcnm != null" ng-cloak>
+        <tr>
+            <td>
+                <table class="table table-bordered table-condensed bcnm-container">
+                    <tr>
+                        <td class="bcnm-name-container" width="100%">
+                            <span class="name">{{bcnm.name | cleanNameTitleCase}}</span>
+                            <span class="levelcap">(Lv. cap: {{bcnm.levelcap | bcnmLevelCap}})</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="margin: 0; padding: 0;">
+                            <table class="table-condensed bcnm-data-container">
+                                <tr>
+                                    <td class="header"><strong>Zone:</strong></td>
+                                    <td class="value">{{bcnm.zonename | cleanNameTitleCase}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="header"><strong>Level Cap:</strong></td>
+                                    <td class="value">{{bcnm.levelcap | bcnmLevelCap}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="header"><strong>Time Limit:</strong></td>
+                                    <td class="value">{{bcnm.timelimit | timestamp}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="header"><strong>Party Size:</strong></td>
+                                    <td class="value">{{bcnm.partysize}} player(s)</td>
+                                </tr>
+                                <tr>
+                                    <td class="header"><strong>Rules:</strong></td>
+                                    <td class="value">{{bcnm.rules | bcnmRules}}</td>
+                                </tr>
+                                <!--
+                                Disabled until DSP implements records properly.
+                                <tr>
+                                    <td class="header"><strong>Record:</strong></td>
+                                    <td class="value" ng-show="bcnm.fastestName != null">
+                                        {{bcnm.fastestName}} - {{bcnm.fastestTime | timestamp}}
+                                    </td>
+                                    <td class="value" ng-show="bcnm.fastestName == null">
+                                        <em>No known record at this time!</em>
+                                    </td>
+                                </tr>-->
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- BCNM Battlefield Information -->
+        <tr>
+            <td>
+                <table class="table table-bordered table-condensed table-hover bcnm-information-table">
+                    <tr>
+                        <th>BCNM Battlfield Information</th>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0; padding: 5px;">
+                            <table class="table table-bordered table-condensed table-hover bcnm-battlefield-table collapsible" ng-repeat="(k,v) in bcnm.monsters" ng-if="v && v.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">
+                                            Battlfield #{{k}}
+                                            <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                            <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="header">Monster Name</td>
+                                        <td class="header">Level Range</td>
+                                        <td class="header">Stats</td>
+                                    </tr>
+                                    <tr ng-repeat="m in v">
+                                        <td>
+                                            <a href="/db/monsters/{{m.monsterId}}/{{m.mobname}}">
+                                                {{m.polutils_name | cleanNameTitleCase}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{m.minLevel}} ~ {{m.maxLevel}}
+                                        </td>
+                                        <td>
+                                            <strong>HP</strong> {{m.HP}} / <strong>MP:</strong> {{m.MP}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- BCNM Drop Information -->
+        <tr>
+            <td>
+                <table class="table table-bordered table-condensed table-hover bcnm-information-table">
+                    <tr>
+                        <th>BCNM Drops Information</th>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0; padding: 5px;">
+                            <table class="table table-bordered table-condensed table-hover bcnm-battlefield-table collapsible" ng-repeat="(k,v) in bcnm.drops" ng-if="v && v.length > 0" repeat-done="buildFoldingTables() && refreshTooltips()">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">
+                                            Drop List #{{k}}
+                                            <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                            <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="header" width="16px"></td>
+                                        <td class="header">Item Name</td>
+                                        <td class="header">Drop Chance</td>
+                                    </tr>
+                                    <tr ng-repeat="d in v">
+                                        <td>
+                                            <a ng-href="http://www.ffxiah.com/item/{{d.itemid}}">
+                                                <img ng-src="https://static.ffxiah.com/images/mini-icons/{{d.itemid}}.png" />
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/db/items/{{d.itemid}}/{{d.itemname}}">
+                                                {{d.itemname | cleanNameTitleCase}}
+                                            </a>
+                                        </td>
+                                        <td width="150px">
+                                            {{d.rolls * 0.1 | number:2}}%
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/bcnmtool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/bcnmtool.js"></script>
+})

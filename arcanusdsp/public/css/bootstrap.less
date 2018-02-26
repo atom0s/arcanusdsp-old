@@ -1,0 +1,265 @@
+/**
+ * arcanus - Copyright (c) 2015-2016 atom0s [atom0s@live.com]
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ *
+ * By using arcanus, you agree to the above license and its terms.
+ *
+ *      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
+ *                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
+ *                    endorses you or your use.
+ *
+ *   Non-Commercial - You may not use the material (arcanus) for commercial purposes.
+ *
+ *   No-Derivatives - If you remix, transform, or build upon the material (arcanus), you may not distribute the
+ *                    modified material. You are, however, allowed to submit the modified works back to the original
+ *                    arcanus project in attempt to have it added to the original project.
+ *
+ * You may not apply legal terms or technological measures that legally restrict others
+ * from doing anything the license permits.
+ *
+ * You may contact me, atom0s, at atom0s@live.com for more information or if you are seeking commercial use.
+ *
+ * No warranties are given.
+ */
+
+/**
+ * Bootstrap v3 Sub-Menu Styles
+ */
+
+.dropdown-menu {
+    border-radius: unset !important;
+}
+
+.dropdown-menu,
+.dropdown-menu > li > a {
+    background: #333;
+    color: #FFF;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    left: 100%;
+    margin-left: -1px;
+    margin-top: -6px;
+    top: 0;
+    -moz-border-radius: 0 6px 6px 6px;
+    -webkit-border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu > a:after {
+    border: 5px solid transparent;
+    border-left-color: #CCCCCC;
+    border-right-width: 0;
+    content: " ";
+    display: block;
+    float: right;
+    height: 0;
+    margin-right: -10px;
+    margin-top: 5px;
+    width: 0;
+}
+
+.dropdown-submenu:hover > a:after {
+    border-left-color: #FFFFFF;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+    border-radius: 6px 0 6px 6px;
+    left: -100%;
+    margin-left: 10px;
+    -moz-border-radius: 6px 0 6px 6px;
+    -webkit-border-radius: 6px 0 6px 6px;
+}
+
+/**
+ * Custom Navigation Bar Styles
+ */
+
+.navbar-custom {
+    background-color: #2A2A2A;
+    border-radius: 0;
+    border: none;
+    border-top: 3px solid orange !important;
+    margin-bottom: 0 !important;
+    min-height: 38px !important;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-nav > li > a,
+.navbar-custom.collapse {
+    color: #FFF;
+    height: 38px !important;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+    background-color: #3A3A3A;
+    border-right: 1px solid #666;
+    color: #FFF;
+    text-align: center;
+    text-shadow: 1px 1px 0 black;
+    width: 50px;
+}
+
+.navbar-custom .navbar-nav > li > a {
+    border-right: 1px solid #666;
+    color: #FFF;
+    text-shadow: 1px 1px 0 black;
+}
+
+.navbar-nav.navbar-right > li:last-child > a {
+    border-right: none !important;
+}
+
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus {
+    background-color: #101010;
+    color: #FFF;
+}
+
+.navbar-custom .navbar-nav > .open > a,
+.navbar-custom .navbar-nav > .active > a,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+    color: #FFF;
+    background-color: #101010;
+}
+
+.navbar-custom .navbar-toggle {
+    border-color: #FFF;
+    color: #FFF;
+    padding: 0 5px !important;
+}
+
+.navbar-custom .navbar-toggle .icon-bar {
+    background-color: #FFF;
+}
+
+/**
+ * Custom Well Styles
+ */
+
+.well,
+.well-sm,
+.well-lg {
+    border-radius: unset;
+    box-shadow: none;
+    margin: 0;
+}
+
+/**
+ * Slim Row Style
+ */
+.row-slim-padding {
+    [class*="col-"] {
+        padding: 5px !important;
+    }
+    .widget:last-child {
+        margin: 0 !important;
+    }
+}
+
+/**
+ * Default Group Addon Width Style
+ */
+.input-group-addon {
+    min-width: 40px !important;
+}
+
+/**
+ * Modal Dialog Styles
+ */
+
+.modal {
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .modal:before {
+        content: " ";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.modal-content {
+    border-radius: 0 !important;
+
+    .modal-header {
+        background: url('../img/widget/widget-header-bg.png') repeat-x;
+        border-bottom: 0;
+        height: 28px;
+        padding: 3px 0 0 5px;
+
+        .close {
+            color: #FFF;
+            opacity: 0.6;
+            padding-right: 5px;
+        }
+        .close:hover {
+            opacity: 1.0;
+        }
+
+        .modal-title {
+            color: #FFF;
+            font-weight: bold;
+        }
+
+        .modal-title:before {
+            content: '\a0\f054\20';
+            font-family: FontAwesome, 'Tahoma', serif;
+        }
+    }
+
+    .modal-body {
+    }
+
+    .modal-footer {
+        margin: 0;
+        padding: 5px;
+
+        button {
+            border-radius: 0;
+        }
+    }
+}
+
+.modal-blue {
+    border-top: 3px solid @color-blue;
+}
+
+.modal-green {
+    border-top: 3px solid @color-green;
+}
+
+.modal-orange {
+    border-top: 3px solid @color-orange;
+}
+
+.modal-red {
+    border-top: 3px solid @color-red;
+}

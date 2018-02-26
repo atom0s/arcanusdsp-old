@@ -1,0 +1,440 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<div class="item" ng-controller="itemToolController" data-ng-init="getItemById(@model.itemid)" ng-cloak>
+    <div class="widget widget-red" ng-show="item == null && itemLoading == false">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>An Error Occurred</span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <span>Sorry, but the requested item could not be loaded.</span>
+        </div>
+    </div>
+
+    <div class="loading" ng-show="item == null && itemLoading == true" ng-cloak>
+        <div class="spinner-container">
+            <div class="spinner spinner-bounce-middle"></div>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-condensed item-main-container" ng-show="item != null" ng-cloak>
+        <tr>
+            <td>
+                <table class="table table-bordered table-condensed item-container">
+                    <tr>
+                        <td class="item-icon-container" width="75px">
+                            <a ng-href="https://www.ffxiah.com/item/{{item.itemid}}">
+                                <img ng-src="https://static.ffxiah.com/images/icon/{{item.itemid}}.png" width="32" height="32" />
+                            </a>
+                        </td>
+                        <td class="item-name-container" width="100%">
+                            <span class="item-name">{{item.name | cleanNameTitleCase }}</span>
+                            <span class="item-id">(Item Id: {{item.itemid}})</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- Item Type: Armor -->
+                <table class="table table-bordered table-condensed table-hover item-information-table collapsible" ng-show="item.rslot != null">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                Armor Item Information
+                                <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="name">Level:</td>
+                            <td class="value">{{item.level}}</td>
+                        </tr>
+                        <tr>
+                            <td class="name">Jobs:</td>
+                            <td class="value">{{item.jobs | itemUsableJobs}}</td>
+                        </tr>
+                        <tr>
+                            <td class="name">Slot(s):</td>
+                            <td class="value">{{item.slot | itemSlots}}</td>
+                        </tr>
+                        <tr>
+                            <td class="name">RSlot:</td>
+                            <td class="value">{{item.rslot | itemSlots}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Item Type: Weapon -->
+                <table class="table table-bordered table-condensed table-hover item-information-table collapsible" ng-show="item.dmgtype != null">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                Weapon Item Information
+                                <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td class="name">Skill:</td>
+                        <td class="value">{{item.skill | itemSkillType}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Sub Skill:</td>
+                        <td class="value">{{item.subskill | itemSkillSubType}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Damage Type:</td>
+                        <td class="value">{{item.dmgtype | itemDamageType}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Hits:</td>
+                        <td class="value">{{item.hit}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Delay:</td>
+                        <td class="value">{{item.delay}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Damage:</td>
+                        <td class="value">{{item.dmg}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Points To Unlock:</td>
+                        <td class="value">{{item.unlock_points}}</td>
+                    </tr>
+                </table>
+
+                <!-- Item Type: Basic/Common -->
+                <table class="table table-bordered table-condensed table-hover item-information-table collapsible" ng-show="item.basesell != null">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                Basic / Common Item Information
+                                <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td class="name">Sub Id:</td>
+                        <td class="value">{{item.subid}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Stack Size:</td>
+                        <td class="value">{{item.stacksize}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Flags:</td>
+                        <td class="value">{{item.flags | itemFlags}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">AH Category:</td>
+                        <td class="value">{{item.ah}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">No Sale Flag:</td>
+                        <td class="value">{{item.nosale}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Base Sell (To NPC):</td>
+                        <td class="value">{{item.basesell | currency:"$":0}}</td>
+                    </tr>
+                </table>
+
+                <!-- Item Type: Furnishing -->
+                <table class="table table-bordered table-condensed table-hover item-information-table collapsible" ng-show="item.aura != null">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                Furnishing Item Information
+                                <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td class="name">Storage:</td>
+                        <td class="value">{{item.storage}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Moghancement:</td>
+                        <td class="value">{{item.moghancement}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Element:</td>
+                        <td class="value">{{item.element}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Aura:</td>
+                        <td class="value">{{item.aura}}</td>
+                    </tr>
+                </table>
+
+                <!-- Item Type: Activated -->
+                <table class="table table-bordered table-condensed table-hover item-information-table collapsible" ng-show="item.activation != null">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                Activation Item Information
+                                <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td class="name">Valid Targets:</td>
+                        <td class="value">{{item.validtargets | itemValidTargets}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Activation:</td>
+                        <td class="value">{{item.activation}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Animation:</td>
+                        <td class="value">{{item.animation}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Animation Time:</td>
+                        <td class="value">{{item.animationtime}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Max Charges:</td>
+                        <td class="value">{{item.maxcharges}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Use Delay:</td>
+                        <td class="value">{{item.usedelay}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Reuse Delay:</td>
+                        <td class="value">{{item.reusedelay}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">AoE:</td>
+                        <td class="value">{{item.aoe}}</td>
+                    </tr>
+                </table>
+
+                <!-- Item Modifications -->
+                <table class="table table-bordered table-condensed table-hover item-information-table collapsible">
+                    <thead>
+                        <tr>
+                            <th>
+                                Item Modifications
+                                <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="m in item.mods">
+                        <td>
+                            {{m | itemMod}}
+                        </td>
+                    </tr>
+                    <tr ng-show="item.mods == null || item.mods.length == 0">
+                        <td>This item has no mods to display!</td>
+                    </tr>
+                </table>
+
+                <!-- Item Crafting -->
+                <table class="table table-bordered table-condensed table-hover item-information-table collapsible">
+                    <thead>
+                        <tr>
+                            <th>
+                                Item Crafting
+                                <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-show="item.crafts == null || item.crafts.length == 0">
+                        <tr>
+                            <td>
+                                <em>This item has no craft information available.</em>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-show="item.crafts.length > 0" ng-cloak>
+                        <tr ng-repeat="craft in item.crafts">
+                            <td>
+                                <table class="table table-condensed table-bordered item-container">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3" class="warning">
+                                                <a href="/db/items/{{craft.crystal}}">
+                                                    <img ng-src="https://static.ffxiah.com/images/mini-icons/{{craft.crystal}}.png" alt="" width="16" height="16" />
+                                                </a>
+                                                {{craft.requirements | craftRequirements}}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ingredient in craft.ingredients">
+                                            <td>
+                                                <img ng-src="https://static.ffxiah.com/images/mini-icons/{{ingredient.itemid}}.png" alt="" width="16" height="16" />
+                                                <a ng-href="/db/items/{{ingredient.itemid}}/">{{ingredient.name |
+                                                    cleanNameTitleCase}}</a> x{{ingredient.count}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="3" class="active">Results</th>
+                                        </tr>
+
+                                        <tr ng-repeat="result in craft.results">
+                                            <td>
+                                                <strong>{{result.type}}: </strong>
+                                                <img ng-src="https://static.ffxiah.com/images/mini-icons/{{result.itemid}}.png" alt="" width="16" height="16" />
+                                                <a ng-href="/db/items/{{result.itemid}}/">{{result.name |
+                                                    cleanNameTitleCase}}</a> x{{result.count}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Item Drops -->
+                <table class="table table-bordered table-condensed table-hover item-information-table collapsible">
+                    <thead>
+                        <tr>
+                            <th>
+                                Item Drops
+                                <div class="pull-right open"><i class="fa fa-chevron-up"></i></div>
+                                <div class="pull-right close"><i class="fa fa-chevron-down"></i></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr ng-show="item.drops == null || item.drops.length == 0">
+                        <td>This item has no drops to display!</td>
+                    </tr>
+
+                    <tr ng-show="item.drops.length > 0">
+                        <td>
+                            <table id="droptable" class="table table-bordered table-condensed table-hover item-information-table tablesorter">
+                                <thead>
+                                    <th>Name</th>
+                                    <th>Zone</th>
+                                    <th>Rate</th>
+                                    <th>Position</th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="d in item.drops" repeat-done="makeSortable('droptable')">
+                                        <td><a ng-href="/db/monsters/{{d.mobid}}/{{d.polutils_name}}">{{d.polutils_name
+                                            | cleanName}}</a></td>
+                                        <td>{{d.zonename | cleanNameTitleCase}}</td>
+                                        <td>(Hidden)</td>
+                                        <td>
+                                            <strong>X:</strong> {{d.pos_x}},
+                                            <strong>Y:</strong> {{d.pos_y}},
+                                            <strong>Z:</strong> {{d.pos_z}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="item-info-container" colspan="3">
+                <table class="table table-bordered table-condensed item-ah-table">
+                    <tr>
+                        <th colspan="6" class="item-ah-heading">
+                            Auction House History <em><small>(Last {{item.ahhistory.length}} Transactions)</small> &bull;</em>
+                           Current Stock: <small>{{item.ahstock}}</small>
+                        </th>
+                    </tr>
+                    <tr class="item-ah-headers">
+                        <td class="heading" width="32px"></td>
+                        <td class="heading">Item</td>
+                        <td class="heading">Date</td>
+                        <td class="heading">Seller</td>
+                        <td class="heading">Buyer</td>
+                        <td class="heading">Price</td>
+                    </tr>
+                    <tbody class="item-ah-items">
+                        <tr ng-repeat="ah in item.ahhistory" repeat-done="refreshTooltips()">
+                            <td class="icon">
+                                <a ng-href="https://www.ffxiah.com/item/{{ah.itemid}}">
+                                    <img ng-src="https://static.ffxiah.com/images/mini-icons/{{ah.itemid}}.png" />
+                                </a>
+                            </td>
+                            <td class="name">
+                                <a ng-href="/db/items/{{ah.itemid}}/{{ah.itemname}}">
+                                    {{ah.itemname | cleanNameTitleCase}}
+                                </a>
+                            </td>
+                            <td class="name">{{ah.sell_date * 1000 | date}}</td>
+                            <td class="name">{{ah.seller_name}}</td>
+                            <td class="name">{{ah.buyer_name}}</td>
+                            <td class="name">{{ah.sale | currency:"$":0}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-show="item.ahhistory.length == 0">
+                        <tr>
+                            <td colspan="6" class="noitems">There is no AH history to display!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- Item Bazaar Information -->
+                <table class="table table-bordered table-condensed table-hover item-information-table">
+                    <thead>
+                        <tr>
+                            <th><img src="/public/img/ffxi/nameflags/bazaar.png" alt="bazaar" width="16" height="16">
+                                Bazaars <small>(Players Bazaaring This Item)</small>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr ng-show="item.bazaar == null || item.bazaar.length == 0">
+                        <td>This item has no bazaar information to display!</td>
+                    </tr>
+
+                    <tr ng-show="item.bazaar.length > 0">
+                        <td>
+                            <table id="bazaartable" class="table table-bordered table-condensed table-hover item-information-table tablesorter">
+                                <thead>
+                                    <th>Player Name</th>
+                                    <th>Price</th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="d in item.bazaar" repeat-done="makeSortable('bazaartable')">
+                                        <td>
+                                            <a ng-href="/db/characters/{{d.charid}}/{{d.charname}}">{{d.charname}}</a>
+                                        </td>
+                                        <td>{{d.bazaar | currency:"$":0}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/itemtool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/itemtool.js"></script>
+})

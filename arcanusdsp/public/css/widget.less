@@ -1,0 +1,161 @@
+/**
+ * arcanus - Copyright (c) 2015-2016 atom0s [atom0s@live.com]
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ *
+ * By using arcanus, you agree to the above license and its terms.
+ *
+ *      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
+ *                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
+ *                    endorses you or your use.
+ *
+ *   Non-Commercial - You may not use the material (arcanus) for commercial purposes.
+ *
+ *   No-Derivatives - If you remix, transform, or build upon the material (arcanus), you may not distribute the
+ *                    modified material. You are, however, allowed to submit the modified works back to the original
+ *                    arcanus project in attempt to have it added to the original project.
+ *
+ * You may not apply legal terms or technological measures that legally restrict others
+ * from doing anything the license permits.
+ *
+ * You may contact me, atom0s, at atom0s@live.com for more information or if you are seeking commercial use.
+ *
+ * No warranties are given.
+ */
+
+.widget {
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 3px;
+    margin: 0 0 5px 0;
+
+    .widget-heading {
+        background: url('../img/widget/widget-header-bg.png') repeat-x;
+        height: 25px;
+        padding: 3px 0 0 5px;
+
+        .widget-title::before {
+            content: '\a0\f054\20';
+            font-family: FontAwesome, 'Tahoma', serif;
+        }
+
+        .widget-title {
+            color: #FFF;
+            font-weight: bold;
+        }
+    }
+
+    .widget-body {
+        background: #FAFAFA;
+        border: 1px solid #CCC;
+        border-top: none !important;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .widget-footer {
+        background: #EEE;
+        border: 1px solid rgba(20, 20, 20, 0.2);
+        border-radius: 0;
+        border-top: none !important;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .btn {
+        border-radius: 0;
+    }
+}
+
+.widget-blue {
+    border-top: 3px solid @color-blue;
+}
+
+.widget-green {
+    border-top: 3px solid @color-green;
+}
+
+.widget-orange {
+    border-top: 3px solid @color-orange;
+}
+
+.widget-red {
+    border-top: 3px solid @color-red;
+}
+
+//
+// Global Widget Body Styles
+//
+
+.widget-body {
+    .form-group {
+        margin: 0;
+        padding: 3px 0;
+    }
+}
+
+//
+// Latest News Widget Styles
+//
+
+.latestnews {
+    margin: 0;
+    padding: 0;
+
+    .widget-title a {
+        color: #FFF;
+        text-decoration: none;
+    }
+
+    .widget-title a:hover {
+        color: @color-orange;
+    }
+}
+
+//
+// Login Widget Styles
+//
+
+.login-top {
+    height: 200px !important;
+    margin: 75px auto -75px;
+    position: relative;
+    width: 200px !important;
+    z-index: 0;
+
+    img {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.login {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+
+    .widget-body {
+        margin: 0;
+        padding: 5px;
+    }
+}
+
+//
+// Chat Page Widget
+//
+
+.chat {
+    .widget-body {
+        height: 600px;
+        line-height: 0 !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    .widget-body iframe {
+        height: 100%;
+        width: 100%;
+    }
+}

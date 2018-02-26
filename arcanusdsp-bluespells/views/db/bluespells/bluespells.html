@@ -1,0 +1,29 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<div id="bluespells" class="widget widget-blue" ng-controller="blueToolController" data-ng-init="getBlueSpells()" ng-cloak>
+    <div class="widget-heading">
+        <div class="widget-title">
+            <span>Lookup A Blue Magic Spell</span>
+        </div>
+    </div>
+    <div class="widget-body">
+        <div class="noresults" ng-show="bluespells.length == 0">
+            <span>Sorry, no blue spells were found.</span>
+        </div>
+        <div class="list" ng-show="bluespells.length > 0">
+            <div class="list-item" ng-repeat="s in bluespells">
+                <a ng-href="/db/bluespells/{{s.spellid}}/{{s.name}}">{{s.name | cleanNameTitleCase}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/bluetool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/bluetool.js"></script>
+})

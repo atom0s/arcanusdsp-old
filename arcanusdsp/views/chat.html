@@ -1,0 +1,27 @@
+@html.extend('layout', function (model) { @html.block('content', function (model) {
+
+<div id="chat">
+    <div class="widget widget-red">
+        <div class="widget-heading">
+            <div class="widget-title">Want to use your own client?</div>
+        </div>
+        <div class="widget-body">
+            LegionDark hosts its IRC channel on the Rizon network. You can connect using your own client via:
+            <br><br>
+            <strong>Server:</strong> irc.rizon.net<br>
+            <strong>Port:</strong> 6667<br>
+            <strong>Channel:</strong> #legionffxi
+        </div>
+    </div>
+    <div class="widget widget-blue chat">
+        <div class="widget-heading">
+            <div class="widget-title">IRC Chat</div>
+        </div>
+        <div class="widget-body">
+            <iframe width="100%" height="600px" id="chatWindow" style="border: none" src="http://qchat.rizon.net/?channels=legionffxi&uio=MTY9bnVsbAe6">
+            </iframe>
+        </div>
+    </div>
+</div>
+
+}) })

@@ -1,0 +1,25 @@
+<div id="server-status" class="widget" data-ng-init="getServerOnlineStatus(); getServerClientVersion()" ng-class="{'widget-orange': serverstatus == null, 'widget-red': serverstatus == false, 'widget-green': serverstatus == true}">
+    <div class="widget-heading">
+        <div class="widget-title">
+            <span>Server Status</span>
+        </div>
+    </div>
+    <div class="widget-body" ng-class="{'offline': serverstatus == null || serverstatus == false, 'online': serverstatus == true}">
+        <div class="loading" ng-show="serverstatus == null">
+            <div class="spinner-container">
+                <div class="spinner spinner-bounce-middle"></div>
+                <span>Loading...</span>
+            </div>
+        </div>
+        <div ng-show="serverstatus == true" class="text-success">
+            <strong>
+                <img src="/public/img/onlinestatus/online.png" /> Online!
+            </strong>
+        </div>
+        <div ng-show="serverstatus == false" class="text-danger">
+            <strong>
+                <img src="/public/img/onlinestatus/offline.png" /> Status unavailable!
+            </strong>
+        </div>
+    </div>
+</div>

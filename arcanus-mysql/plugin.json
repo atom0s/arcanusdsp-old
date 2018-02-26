@@ -1,0 +1,20 @@
+{
+  "uid": "arcanus-mysql",
+  "name": "arcanus MySQL",
+  "description": "Extends the arcanus object by adding a MySQL database connection object.",
+  "version": "1.0.0",
+  "author": {
+    "name": "atom0s",
+    "email": "atom0s@live.com",
+    "website": "http://atom0s.com/"
+  },
+  "favicon": "",
+  "entry": "arcanus-mysql.js",
+  "dependencies": {
+    "npm": {
+      "mysql": "^2.10.2"
+    },
+    "bower": {}
+  },
+  "config": {}
+}

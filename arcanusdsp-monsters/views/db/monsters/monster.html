@@ -1,0 +1,141 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<div class="monster" ng-controller="monsterToolController" data-ng-init="getMonsterById(@model.mobid)" ng-cloak>
+    <div class="widget widget-red" ng-show="monster == null && monsterLoading == false">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>An Error Occurred</span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <span>Sorry, but the requested monster could not be loaded.</span>
+        </div>
+    </div>
+
+    <div class="loading" ng-show="monster == null && monsterLoading == true" ng-cloak>
+        <div class="spinner-container">
+            <div class="spinner spinner-bounce-middle"></div>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <div class="alert alert-warning monster-invalid" ng-show="(monster.pos_x == 0 && monster.pos_y == 0 && monster.pos_z == 0) || monster.minhp == 0">
+        <strong>Warning: </strong> This monster appears to be invalid or not implemented.
+    </div>
+
+    <table class="table table-bordered table-condensed monster-main-container" ng-show="monster != null" ng-cloak>
+        <tr>
+            <td>
+                <table class="table table-bordered table-condensed monster-container">
+                    <tr>
+                        <td class="monster-name-container" width="100%">
+                            <span class="name">{{monster.name}}</span>
+                            <span class="level">(Lv. {{monster.minlevel}} - {{monster.maxlevel}})</span>
+                        </td>
+                        <td class="monster-stats-container">
+                            <span>
+                                <strong>HP: </strong> {{monster.minhp | number}} ~ {{monster.maxhp | number}}
+                                <br />
+                                <strong>MP: </strong> {{monster.mp | number}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="margin: 0; padding: 0;">
+                            <table class="table-condensed monster-data-container">
+                                <tr>
+                                    <td class="header"><strong>Respawn:</strong></td>
+                                    <td class="value">
+                                        {{isScriptedMonster(monster.spawntype) ? 'Scripted' : (monster.respawntime | respawnTime)}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="header"><strong>Spawn Flags:</strong></td>
+                                    <td class="value">{{monster.spawntype | spawnFlags}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="header"><strong>Zone:</strong></td>
+                                    <td class="value">
+                                        {{monster.zonename | cleanName}} @@
+                                        <small>
+                                            <strong>X:</strong> {{monster.pos_x}},
+                                            <strong>Y:</strong> {{monster.pos_y}},
+                                            <strong>Z:</strong> {{monster.pos_z}}
+                                        </small>
+                                    </td>
+                                </tr>
+                                @if (model.user && model.user.priv && model.user.priv > 1) {
+                                <tr>
+                                    <td class="header"><strong>Drop ID:</strong></td>
+                                    <td class="value">{{monster.dropid}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="header"><strong>Group ID:</strong></td>
+                                    <td class="value">{{monster.groupid}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="header"><strong>Pool ID:</strong></td>
+                                    <td class="value">{{monster.poolid}}</td>
+                                </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="gm-command" colspan="2">
+                            <img src="/public/img/ffxi/nameflags/gm.png" alt="gm" />
+                            <strong>GM Command:</strong>
+                            <input size="30" type="text" readonly value="@@pos {{monster.pos_x}} {{monster.pos_y}} {{monster.pos_z}} {{monster.zoneid}}" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table table-bordered table-condensed table-hover monster-drops-table">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Drops</th>
+                        </tr>
+                        <tr>
+                            <td class="heading" width="32px">&nbsp;</td>
+                            <td class="heading">Item Name</td>
+                            <td class="heading">Drop Rate</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="monster.drops.length == 0">
+                            <td colspan="3">
+                                <span class="nodrops">There are no drops to display!</span>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="d in monster.drops" repeat-done="refreshTooltips()">
+                            <td class="icon">
+                                <a ng-href="http://www.ffxiah.com/item/{{d.itemid}}">
+                                    <img ng-src="https://static.ffxiah.com/images/mini-icons/{{d.itemid}}.png" />
+                                </a>
+                            </td>
+                            <td class="name">
+                                <a ng-href="/db/items/{{d.itemid}}/{{d.itemname}}">
+                                    {{d.itemname | cleanNameTitleCase}}
+                                </a>
+                            </td>
+                            <td class="rate">(Hidden)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/monstertool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/monstertool.js"></script>
+})

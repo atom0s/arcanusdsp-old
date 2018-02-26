@@ -1,0 +1,87 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<div class="bluespell" ng-controller="blueToolController" data-ng-init="getBlueSpellById(@model.spellid)" ng-cloak>
+    <div class="widget widget-red" ng-show="bluespell == null && bluespellLoading == false || bluespell.length == 0 && bluespellLoading == false">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>An Error Occurred</span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <span>Sorry, but the requested spell could not be loaded.</span>
+        </div>
+    </div>
+
+    <div class="loading" ng-show="bluespell == null && bluespellLoading == true" ng-cloak>
+        <div class="spinner-container">
+            <div class="spinner spinner-bounce-middle"></div>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-condensed bluespell-main-container" ng-show="bluespell != null && bluespell.length >= 1" ng-cloak>
+        <tr>
+            <td>
+                <table class="table table-bordered table-condensed bluespell-container">
+                    <tr>
+                        <td class="bluespell-name-container" width="100%">
+                            <span class="name">{{bluespell[0].mob_skill_name | cleanNameTitleCase}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table id="bluemonsters" class="table table-bordered table-condensed table-hover bluespell-monster-table">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Monsters That Use This Spell</th>
+                        </tr>
+                        <tr>
+                            <th class="heading">Monster Name</th>
+                            <th class="heading">Monster Zone</th>
+                            <th class="heading">Monster Position</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                          <tr ng-repeat="m in bluespell" repeat-done="makeSortable('bluemonsters')">
+                            <td class="name">
+                                <a ng-href="/db/monsters/{{m.mobid}}/{{m.mobname}}">
+                                    {{m.polutils_name | cleanNameTitleCase}}
+                                </a>
+                            </td>
+                            <td class="zone">{{m.zonename | cleanName}}</td>
+                            <td class="position">
+                                <small>
+                                    <strong>X:</strong> {{m.pos_x}},
+                                    <strong>Y:</strong> {{m.pos_y}},
+                                    <strong>Z:</strong> {{m.pos_z}}
+                                </small>
+                            </td>
+                        </tr>
+                        <tr ng-show="bluespell.length == 0">
+                            <td colspan="3">
+                                <span class="nodrops">There are no monsters to display!</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+
+</div>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/bluetool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/bluetool.js"></script>
+})

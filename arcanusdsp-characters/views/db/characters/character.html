@@ -1,0 +1,240 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<div class="character-profile" ng-controller="characterToolController" data-ng-init="getCharacterById(@model.charid)" ng-cloak>
+
+    <div class="widget widget-red" ng-show="character == null && characterLoading == false">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>An Error Occurred</span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <span>Sorry, but the requested profile could not be loaded.</span>
+        </div>
+    </div>
+
+    <div class="loading" ng-show="character == null && characterLoading == true" ng-cloak>
+        <div class="spinner-container">
+            <div class="spinner spinner-bounce-middle"></div>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-condensed character-info-table" ng-show="character != null" ng-cloak>
+        <tr>
+            <td class="character-info-container">
+                <table class="table table-bordered table-condensed character-info-table">
+                    <tr>
+                        <td class="character-avatar" width="75px">
+                            <img ng-src="{{character | raceHairImage}}" alt="avatar" width="70" height="65" ng-cloak />
+                        </td>
+                        <td width="100%" class="character-info">
+                            <table class="table table-condensed character-info-inner">
+                                <tr>
+                                    <td class="character-name" width="100%">
+                                        <strong>{{character.charname}}</strong>
+                                        <span ng-show="character.isonline == 0" style="font-size: 10px; font-style: italic; font-weight: normal;">
+                                            (Last online: {{character.timelastmodify | date:'medium'}})
+                                        </span>
+                                    </td>
+                                    <td class="character-icons">
+                                        <div class="icons" ng-bind-html="character | nameflagsToImages" ng-cloak></div>
+                                    </td>
+                                    <td class="character-linkshells" ng-show="character.linkshells.length > 0" ng-cloak>
+                                        <div ng-repeat="l in character.linkshells">
+                                            <div class="linkshell" ng-style="{'background-color': l.color}">
+                                                <img ng-src="{{l.rank | linkshellRankToImage}}" alt="{{l.name}}" title="{{l.name}}" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="character-onlinestatus">
+                                        <img ng-show="character.isonline == 0" ng-src="/public/img/onlinestatus/offline.png" alt="offline" title="Currently offline." width="16" height="16" ng-cloak />
+                                        <img ng-show="character.isonline == 1" ng-src="/public/img/onlinestatus/online.png" alt="online" title="Online Now!" width="16" height="16" ng-cloak />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="nation{{character.nation}}">
+                                        <img class="character-nation-flag" ng-src="{{character.nation | nationFlag}}" alt="nationflag" title="{{character.nation | nationName}}" width="16" height="16" />
+                                        <span class="character-nation">
+                                            {{character.nation | nationName}} &bull; {{character.rank}} |
+                                        </span>
+                                        <span class="character-title">{{character.title | titleName}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="character-jobinfo" colspan="4">
+                                        <small>{{character | jobInformation}}</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="character-ranks-container" colspan="3">
+                <table class="table table-bordered table-condensed character-ranks-container">
+                    <tr>
+                        <td class="character-rank-info sandoria" width="33%">
+                            <img ng-src="{{0 | nationFlag}}" alt="rankflag" title="{{0 | nationName}}" width="24" height="24" />
+                            <strong>{{character.rank_sandoria}}</strong>
+                        </td>
+                        <td class="character-rank-info bastok" width="33%">
+                            <img ng-src="{{1 | nationFlag}}" alt="rankflag" title="{{1 | nationName}}" width="24" height="24" />
+                            <strong>{{character.rank_bastok}}</strong>
+                        </td>
+                        <td class="character-rank-info windurst" width="33%">
+                            <img ng-src="{{2 | nationFlag}}" alt="rankflag" title="{{2 | nationName}}" width="24" height="24" />
+                            <strong>{{character.rank_windurst}}</strong>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="character-info-container" colspan="3">
+                <table class="table table-bordered table-condensed character-info-table">
+                    <tr>
+                        <td>
+                            <table class="character-jobs-table">
+                                <thead>
+                                    <tr>
+                                        <th class="heading" colspan="4">Job Levels</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="row in character.jobsrows">
+                                        <td class="name" ng-class="{'capped': row[0].level >= 99}">
+                                            {{row[0].name.toUpperCase()}}
+                                        </td>
+                                        <td class="level" ng-class="{'capped': row[0].level >= 99}">
+                                            {{row[0].level}}
+                                        </td>
+                                        <td class="name" ng-class="{'capped': row[1].level >= 99}">
+                                            {{row[1].name.toUpperCase()}}
+                                        </td>
+                                        <td class="level" ng-class="{'capped': row[1].level >= 99}">
+                                            {{row[1].level}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="character-crafts-table">
+                                <thead>
+                                    <tr>
+                                        <th class="heading" colspan="4">Craft Levels</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="row in character.crafts">
+                                        <td class="name" ng-class="{'capped': row.level >= 100}">{{row.name}}</td>
+                                        <td class="level" ng-class="{'capped': row.level >= 100}">{{row.level}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td width="100%" style="background: #F5F5F5;">&nbsp;</td>
+                        <td style="vertical-align: middle;">
+                            <div class="character-equip-box">
+                                <div class="character-equip-slot" ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]" repeat-done="refreshTooltips()">
+                                    <span ng-bind-html="i | equipmentBlock:character"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="character-info-container" colspan="3">
+                <table class="table table-bordered table-condensed character-ah-table">
+                    <tr>
+                        <th colspan="6" class="character-ah-heading">Auction House History <em>
+                            <small>(Last {{character.ahhistory.length}} Transactions)</small>
+                        </em></th>
+                    </tr>
+                    <tr class="character-ah-headers">
+                        <td class="heading" width="32px"></td>
+                        <td class="heading">Item</td>
+                        <td class="heading">Date</td>
+                        <td class="heading">Seller</td>
+                        <td class="heading">Buyer</td>
+                        <td class="heading">Price</td>
+                    </tr>
+                    <tbody class="character-ah-items">
+                        <tr ng-repeat="ah in character.ahhistory" repeat-done="refreshTooltips()">
+                            <td class="icon">
+                                <a ng-href="https://www.ffxiah.com/item/{{ah.itemid}}">
+                                    <img ng-src="https://static.ffxiah.com/images/mini-icons/{{ah.itemid}}.png" />
+                                </a>
+                            </td>
+                            <td class="name">
+                                <a ng-href="/db/items/{{ah.itemid}}/{{ah.itemname}}">
+                                    {{ah.itemname | cleanNameTitleCase}}
+                                </a>
+                            </td>
+                            <td class="name">{{ah.sell_date * 1000 | date}}</td>
+                            <td class="name">{{ah.seller_name}}</td>
+                            <td class="name">{{ah.buyer_name}}</td>
+                            <td class="name">{{ah.sale | currency:"$":0}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-show="character.ahhistory.length == 0">
+                        <tr>
+                            <td colspan="6" class="noitems">There is no AH history to display!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="character-info-container" colspan="3">
+                <table class="table table-bordered table-condensed character-bazaar-table">
+                    <tr>
+                        <th colspan="6" class="character-bazaar-heading">Bazaar</th>
+                    </tr>
+                    <tr class="character-bazaar-headers">
+                        <td class="heading" width="32px"></td>
+                        <td class="heading">Item</td>
+                        <td class="heading">Price</td>
+                    </tr>
+                    <tbody>
+                        <tr ng-repeat="b in character.bazaar" repeat-done="refreshTooltips()">
+                            <td class="icon">
+                                <a ng-href="http://www.ffxiah.com/item/{{b.itemid}}">
+                                    <img ng-src="https://static.ffxiah.com/images/mini-icons/{{b.itemid}}.png" />
+                                </a>
+                            </td>
+                            <td class="name">
+                                <a ng-href="/db/items/{{b.itemid}}/{{b.itemname}}">
+                                    {{b.itemname | cleanNameTitleCase}}
+                                </a>
+                            </td>
+                            <td class="name">{{b.bazaar | currency:"$":0}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-show="character.bazaar.length == 0">
+                        <tr>
+                            <td colspan="6" class="noitems">There are no bazaar items to display!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/charactertool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/charactertool.js"></script>
+})

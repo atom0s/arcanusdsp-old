@@ -1,0 +1,68 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<form class="characterLookup" name="characterLookup" ng-init="charName = ''" ng-controller="characterToolController">
+    <div class="widget widget-blue">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <span>Find A Character</span>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="charname-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" class="form-control" id="charname" name="charname" placeholder="Enter a character name (or part of a name)..." aria-describedby="charname-addon"
+                           ng-minlength="3"
+                           ng-model="charName" required>
+                </div>
+                <span ng-show="characterLookup.charname.$error.minlength" class="ng-error">Enter at least 3 characters!</span>
+            </div>
+        </div>
+        <div class="widget-footer">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary btn-xs" ng-click="characterLookup.charname.$valid && getCharactersByName(charName)" ng-disabled="charactersLookupEnabled == false">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="characters != null">
+        <hr />
+        <div id="character-results" class="widget widget-orange">
+            <div class="widget-heading">
+                <div class="widget-title">
+                    <span>Found Characters</span>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="noresults" ng-show="characters.length == 0">
+                    <span>Sorry, no players found with that name.</span>
+                </div>
+                <div class="list" ng-show="characters.length > 0">
+                    <div class="list-item" ng-repeat="c in characters | limitTo:10:characterResultsPage*10">
+                        <a ng-href="/db/characters/{{c.charid}}/{{c.charname}}">{{c.charname}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-footer text-right">
+                <button class="btn btn-xs btn-primary" ng-disabled="characterResultsPage == 0" ng-click="characterResultsPage=characterResultsPage-1">
+                    Previous
+                </button>
+                {{characterResultsPage+1}} / {{characters | pageCount:10}}
+                <button class="btn btn-xs btn-primary" ng-disabled="characterResultsPage >= characters.length/10 - 1" ng-click="characterResultsPage=characterResultsPage+1">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+}) })
+
+@html.append('css', function(model) {
+<link rel="stylesheet" href="/public/css/charactertool.css" />
+})
+
+@html.append('footer-scripts', function(model) {
+<script type="text/javascript" src="/public/js/charactertool.js"></script>
+})

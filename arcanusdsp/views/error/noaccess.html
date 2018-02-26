@@ -1,0 +1,26 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+<div class="widget widget-red">
+    <div class="widget-heading">
+        <div class="widget-title">
+            <span>You do not have permission to do that!</span>
+        </div>
+    </div>
+    <div class="widget-body">
+        <div class="container-fluid">
+            <div class="row text-center">
+                <i class="fa fa-ban fa-5x alert-danger" style="background: transparent"></i>
+            </div>
+            <div class="row text-center">
+                <br />
+                <span class="text-center"><strong>Authorization Required</strong></span>
+                <br /><br />
+                The page you are attempting to access requires you to be logged in.
+                <br />
+                Did you forget to <a href="/account/login">login</a>?
+            </div>
+        </div>
+    </div>
+</div>
+
+}) })

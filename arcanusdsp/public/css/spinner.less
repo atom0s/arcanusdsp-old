@@ -1,0 +1,133 @@
+/**
+ * arcanus - Copyright (c) 2015-2016 atom0s [atom0s@live.com]
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ *
+ * By using arcanus, you agree to the above license and its terms.
+ *
+ *      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
+ *                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
+ *                    endorses you or your use.
+ *
+ *   Non-Commercial - You may not use the material (arcanus) for commercial purposes.
+ *
+ *   No-Derivatives - If you remix, transform, or build upon the material (arcanus), you may not distribute the
+ *                    modified material. You are, however, allowed to submit the modified works back to the original
+ *                    arcanus project in attempt to have it added to the original project.
+ *
+ * You may not apply legal terms or technological measures that legally restrict others
+ * from doing anything the license permits.
+ *
+ * You may contact me, atom0s, at atom0s@live.com for more information or if you are seeking commercial use.
+ *
+ * No warranties are given.
+ */
+
+/**
+ * Thanks to: Arthur Camara
+ * http://codepen.io/arthurcamara1/pen/LpNwyq
+ */
+
+@-webkit-keyframes bounce-middle {
+    0% {
+        height: 4px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    50% {
+        height: 20px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    100% {
+        height: 4px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+}
+
+@keyframes bounce-middle {
+    0% {
+        height: 4px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    50% {
+        height: 20px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    100% {
+        height: 4px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+}
+
+.spinner-bounce-middle {
+    -webkit-animation: bounce-middle 0.6s ease 0.1s infinite;
+    animation: bounce-middle 0.6s ease 0.1s infinite;
+}
+
+.spinner-bounce-middle:before, .spinner-bounce-middle:after {
+    -webkit-transform: translateY(-10px) translateZ(0);
+    transform: translateY(-10px) translateZ(0);
+    top: 50% !important;
+}
+
+.spinner-bounce-middle:before {
+    -webkit-animation: bounce-middle 0.6s ease 0s infinite;
+    animation: bounce-middle 0.6s ease 0s infinite;
+}
+
+.spinner-bounce-middle:after {
+    -webkit-animation: bounce-middle 0.6s ease 0.2s infinite;
+    animation: bounce-middle 0.6s ease 0.2s infinite;
+}
+
+.spinner, .spinner:before, .spinner:after {
+    width: 4px;
+    height: 20px;
+    background-color: @color-orange;
+    border-radius: 1px;
+}
+
+.spinner {
+    display: inline-block;
+    position: relative;
+}
+
+.spinner:before, .spinner:after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+}
+
+.spinner:before {
+    left: -6px;
+}
+
+.spinner:after {
+    left: 6px;
+}
+
+.spinner-container {
+    height: 35px;
+    padding: 5px;
+
+    .spinner {
+        vertical-align: middle;
+    }
+
+    span {
+        color: #3D3D3D;
+        display: inline-block;
+        font-variant: small-caps;
+        font-weight: 600;
+        padding-left: 5px;
+        top: 50%;
+    }
+}

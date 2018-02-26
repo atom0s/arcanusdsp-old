@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="application-name" content="arcanus" />
+    <meta name="author" content="Kupo Private Server" />
+    <meta name="creator" content="atom0s" />
+    <meta name="description" content="@html.raw(model.site.meta.description)" />
+    <meta name="generator" content="arcanus" />
+    <meta name="keywords" content="@html.raw(model.site.meta.keywords)" />
+    <meta name="publisher" content="atom0s" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@html.raw(model.site.meta.title)</title>
+    <link rel="stylesheet" href="/public/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/public/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/public/css/arcanusdsp.css" />
+    <script type="text/javascript" src="/public/angular/angular.min.js"></script>
+    @html.block('css')
+    @html.block('header-scripts')
+</head>
+<body class="ng-cloak" ng-app="arcanusdsp" ng-controller="arcanusdspController" ng-cloak>
+    <!-- Include the header. -->
+    @html.include('header')
+
+    <!-- Main content wrapper. -->
+    <div class="container-fluid wrapper">
+        <!-- Include the navigation. -->
+        @html.include('navigation')
+
+        <div class="container-fluid content">
+            <div class="row row-slim-padding">
+                <div class="col-md-12">
+                    <!-- Information messages. -->
+                    @html.include('messages')
+
+                    <!-- Display Server Online Status -->
+                    <div id="server-status" class="widget" data-ng-init="getServerOnlineStatus(); getServerClientVersion()" ng-class="{'widget-orange': serverstatus == null, 'widget-red': serverstatus == false, 'widget-green': serverstatus == true}">
+                        <div class="widget-heading">
+                            <div class="widget-title">
+                                <span>Server Status</span>
+                            </div>
+                        </div>
+                        <div class="widget-body" ng-class="{'offline': serverstatus == null || serverstatus == false, 'online': serverstatus == true}">
+                            <div class="loading" ng-show="serverstatus == null">
+                                <div class="spinner-container">
+                                    <div class="spinner spinner-bounce-middle"></div>
+                                    <span>Loading...</span>
+                                </div>
+                            </div>
+                            <div ng-show="serverstatus == true" class="text-success">
+                                <strong>
+                                    <img src="/public/img/onlinestatus/online.png" /> Online!
+                                </strong>
+                            </div>
+                            <div ng-show="serverstatus == false" class="text-danger">
+                                <strong>
+                                    <img src="/public/img/onlinestatus/offline.png" /> Status unavailable!
+                                </strong>
+                            </div>
+                            <hr />
+                            <strong>Expected Client Version:</strong> <span ng-bind="serverversion"></span>
+                        </div>
+                    </div>
+
+                    <!-- Whos Online Display -->
+                    <div class="whosonline" data-ng-init="getOnlineCharacters()">
+                        <div class="widget widget-green">
+                            <div class="widget-heading">
+                                <div class="widget-title">
+                                    <span>Current Players</span>
+                                    <span class="count" title="Online Character Count">({{onlinecharacters.length}})</span>
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="loading" ng-show="onlinecharacters == null">
+                                    <div class="spinner-container">
+                                        <div class="spinner spinner-bounce-middle"></div>
+                                        <span>Loading...</span>
+                                    </div>
+                                </div>
+                                <div class="noplayers" ng-show="onlinecharacters && onlinecharacters.length == 0">
+                                    <span>Can't get player list at this time.</span>
+                                </div>
+                                <div class="character" ng-repeat="c in onlinecharacters" ng-class="c.gmlevel > 0 ? 'gm' : ''">
+                                    <div class="character-wrapper">
+                                        <div class="linkshells">
+                                            <div ng-style="{'background-color': c.ls1color}">
+                                                <img ng-src="{{c.ls1rank | linkshellRankToImage}}" alt="{{c.ls1name}}" title="{{c.ls1name}}" width="16" height="16" />
+                                            </div>
+                                            <div ng-style="{'background-color': c.ls2color}">
+                                                <img ng-src="{{c.ls2rank | linkshellRankToImage}}" alt="{{c.ls2name}}" title="{{c.ls2name}}" width="16" height="16" />
+                                            </div>
+                                        </div>
+                                        <div class="characterinfo">
+                                            <a ng-href="/db/characters/{{c.charid}}/{{c.charname}}"><strong>{{c.charname}}</strong></a> &bull;
+                                            <small>{{c | jobInformation}}</small>
+                                            <br />
+                                            <em>
+                                                <small>{{c.zonename | cleanName}}</small>
+                                            </em>
+                                        </div>
+                                        <div class="nameflags">
+                                            <div ng-bind-html="c | nameflagsToImages"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dialog -->
+    <div class="modal fade" id="modalDialog" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" ng-class="{'modal-red': modalDialog.status == 0, 'modal-green': modalDialog.status == 1, 'modal-orange': modalDialog.status == 2}">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">&times;</button>
+                    <span class="modal-title" id="titleLabel">{{modalDialog.title}}</span>
+                </div>
+                <div class="modal-body" ng-class="{'alert-danger': modalDialog.status == 0, 'alert-success': modalDialog.status == 1, 'alert-warning': modalDialog.status == 2}">
+                    {{modalDialog.message}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include the footer. -->
+    @html.include('footer')
+
+    <!-- Javascript includes. -->
+    <script type="text/javascript" src="/public/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/public/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/public/sprintf/dist/sprintf.min.js"></script>
+    <script type="text/javascript" src="https://static.ffxiah.com/js/lib/AH.v1442931324.js"></script>
+    <script type="text/javascript" src="/public/js/arcanusdsp.js"></script>
+    <script type="text/javascript" src="/public/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/public/js/jquery.tablesorter.widgets.min.js"></script>
+    @html.block('footer-scripts')
+</body>
+</html>

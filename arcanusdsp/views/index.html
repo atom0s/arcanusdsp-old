@@ -1,0 +1,33 @@
+@html.extend('layout', function (model) { @html.block('content', function (model) {
+
+<div class="latestnews" id="news" data-ng-init="getLatestNewsPosts()">
+    <div class="loading" ng-show="newsposts == null">
+        <div class="spinner-container">
+            <div class="spinner spinner-bounce-middle"></div>
+            <span>Loading...</span>
+        </div>
+    </div>
+    <div class="nonews" ng-show="newsposts && newsposts.length == 0">
+        <span>
+            Unable to obtain the current news. <br>
+            Please try again later.
+        </span>
+    </div>
+    <div class="widget widget-blue" ng-repeat="post in newsposts">
+        <div class="widget-heading">
+            <div class="widget-title">
+                <a ng-href="{{post.link}}">
+                    <span ng-bind-html="post.title | html"></span>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body">
+            <span ng-bind-html="post.text | html"></span>
+        </div>
+        <div class="widget-footer">
+            <strong><em>Posted On:</em></strong> {{post.time}} by <strong><span ng-bind-html="post.author | html"></span></strong>
+        </div>
+    </div>
+</div>
+
+}) })

@@ -1,0 +1,91 @@
+@html.extend('layout', function(model) { @html.block('content', function(model) {
+
+@if (!model.account) {
+
+<div class="widget widget-red">
+    <div class="widget-heading">
+        <div class="widget-title">
+            <span>Error Loading Account Information</span>
+        </div>
+    </div>
+    <div class="widget-body">
+
+        <div class="text-center">
+            <i class="fa fa-exclamation-triangle fa-5x alert-warning" style="background: transparent;"></i>
+        </div>
+        <div class="text-center">
+            <span>Sorry, there was an issue loading your account information. Please try again later.</span>
+        </div>
+    </div>
+</div>
+
+} else {
+
+<div class="account-profile" data-ng-init="account = @(model.account)">
+    <div class="widget widget-blue">
+        <div class="widget-heading">
+            <div class="widget-title">
+                Welcome back, {{account.name}}!
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <strong>Account Name: </strong>
+                    <span>{{account.name}}</span>
+                </div>
+                <div class="row">
+                    <strong>Account Email: </strong>
+                    <span>{{account.email1}}</span>
+                </div>
+                <div class="row">
+                    <strong>Account Status: </strong>
+                    <span>{{account.status | accountStatus}}</span>
+                </div>
+                <div class="row">
+                    <strong>Access Level: </strong>
+                    <span>{{account.priv | accountPrivileges}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget widget-orange">
+        <div class="widget-heading">
+            <div class="widget-title">
+                Your Characters ({{account.characters.length}} / {{account.content_ids}})
+            </div>
+        </div>
+    </div>
+
+    <div class="account-character-tile" ng-repeat="c in account.characters">
+        <div class="avatar">
+            <img ng-src="{{c | raceHairImage}}" alt="...">
+        </div>
+        <div class="container-fluid">
+            <div class="row online-status" ng-class="{'online': c.isonline == 1, 'offline': c.isonline == 0}">
+                {{c.isonline == 0 ? "Offline!" : "Online!"}}
+            </div>
+            <div class="row character-name">
+                <a ng-href="/db/characters/{{c.charid}}/{{c.charname}}">{{c.charname}}</a>
+            </div>
+            <div class="row character-jobinfo">
+                {{c | accountCharacterJobInformation}}
+            </div>
+            <div class="row character-zone">
+                {{c.zonename | cleanName}}
+            </div>
+            <div class="row unstuck">
+
+                <button class="btn btn-primary btn-xs" ng-disabled="c.isonline != 0" title="{{c.isonline == 0 ? 'Click here to free your character.' : 'You must log off to use the unstuck tool.'}}"
+                        ng-click="unstuckCharacter(c)">
+                    Unstuck
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+
+}) })

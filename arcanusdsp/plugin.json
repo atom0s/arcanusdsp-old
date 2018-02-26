@@ -1,0 +1,18 @@
+{
+  "uid": "arcanusdsp",
+  "name": "arcanusdsp Website",
+  "description": "The base arcanusdsp website plugin.",
+  "version": "1.0.0",
+  "author": {
+    "name": "atom0s",
+    "email": "atom0s@live.com",
+    "website": "http://atom0s.com/"
+  },
+  "favicon": "/img/favicon.ico",
+  "entry": "main.js",
+  "dependencies": {
+    "npm": {},
+    "bower": {}
+  },
+  "config": {}
+}

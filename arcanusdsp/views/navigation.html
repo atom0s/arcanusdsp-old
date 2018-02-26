@@ -1,0 +1,19 @@
+<nav class="nav navbar navbar-custom" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navigation-collapse">
+                <span class="sr-only">Toggle Navigation</span>
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+        </div>
+        <div class="collapse navbar-collapse" id="main-navigation-collapse">
+            @html.raw(@model.menu.get('main'))
+            @if (model.user) {
+            @html.raw(@model.menu.get('main-right-user'))
+            } else {
+            @html.raw(@model.menu.get('main-right-guest'))
+            }
+        </div>
+    </div>
+</nav>

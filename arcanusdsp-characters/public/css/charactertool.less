@@ -1,0 +1,306 @@
+/**
+ * arcanus - Copyright (c) 2015-2016 atom0s [atom0s@live.com]
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ *
+ * By using arcanus, you agree to the above license and its terms.
+ *
+ *      Attribution - You must give appropriate credit, provide a link to the license and indicate if changes were
+ *                    made. You must do so in any reasonable manner, but not in any way that suggests the licensor
+ *                    endorses you or your use.
+ *
+ *   Non-Commercial - You may not use the material (arcanus) for commercial purposes.
+ *
+ *   No-Derivatives - If you remix, transform, or build upon the material (arcanus), you may not distribute the
+ *                    modified material. You are, however, allowed to submit the modified works back to the original
+ *                    arcanus project in attempt to have it added to the original project.
+ *
+ * You may not apply legal terms or technological measures that legally restrict others
+ * from doing anything the license permits.
+ *
+ * You may contact me, atom0s, at atom0s@live.com for more information or if you are seeking commercial use.
+ *
+ * No warranties are given.
+ */
+
+.nation0 {
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.nation1 {
+    background: rgba(0, 0, 255, 0.1);
+}
+
+.nation2 {
+    background: rgba(30, 255, 0, 0.1);
+}
+
+.bastok {
+    background: linear-gradient(0deg, #FFF 25%, rgba(46, 106, 242, 0.2) 100%) !important;
+}
+
+.sandoria {
+    background: linear-gradient(0deg, #FFF 25%, rgba(242, 46, 46, 0.2) 100%) !important;
+}
+
+.windurst {
+    background: linear-gradient(0deg, #FFF 25%, rgba(75, 255, 0, 0.2) 100%) !important;
+}
+
+#character-results {
+    .list {
+        border-left: 1px solid #DDD;
+        border-right: 1px solid #DDD;
+        border-bottom: 1px solid #DDD;
+
+        .list-item a {
+            border-top: 1px solid #DDD;
+            display: block;
+            font-weight: bold;
+            padding: 5px;
+            width: 100%;
+        }
+
+        .list-item a:hover {
+            background: #F5F5F5;
+            color: orange;
+            text-decoration: none;
+        }
+    }
+}
+
+.character-profile {
+    color: #555555;
+
+    .character-avatar {
+        vertical-align: middle;
+
+        img {
+            border: 1px solid #000;
+            box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 3px;
+        }
+    }
+
+    .character-info-table {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .character-info {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .character-info-inner > tr:first-child > td {
+        border-top: none !important;
+    }
+
+    .character-info-inner {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        .character-name {
+            border-top: none !important;
+            font-family: Verdana, Tahoma, Arial, serif;
+            font-size: 18px;
+            font-variant: small-caps;
+            font-weight: bolder;
+        }
+
+        .character-icons {
+            border-top: none !important;
+            line-height: 0;
+            margin: 0;
+            padding: 0 5px 0 0;
+            vertical-align: middle;
+            white-space: nowrap;
+
+            div {
+                display: inline-block;
+                white-space: nowrap;
+            }
+
+            img {
+                padding: 2px;
+            }
+        }
+
+        .character-linkshells {
+            border-left: 1px solid #DDD;
+            border-top: none !important;
+            line-height: 0;
+            margin: 0;
+            padding: 0 5px;
+            vertical-align: middle;
+            white-space: nowrap;
+
+            div {
+                display: inline-block;
+                margin: 1px;
+                white-space: nowrap;
+            }
+
+            img {
+                height: 16px;
+                width: 16px;
+            }
+        }
+
+        .character-onlinestatus {
+            border-left: 1px solid #DDD !important;
+            border-top: none !important;
+        }
+
+        .character-nation-flag {
+            height: 16px;
+            width: 16px;
+        }
+
+        .character-nation {
+            font-size: 12px;
+        }
+
+        .character-title {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .character-jobinfo {
+        }
+    }
+
+    .character-ranks-container {
+        background: #F5F5F5;
+        margin: 0 !important;
+        padding: 5px !important;
+
+        .character-rank-info {
+            font-size: 18px;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+
+    .character-info-container {
+        background: #F5F5F5;
+        margin: 0 !important;
+        padding: 5px !important;
+
+        .character-info-table {
+            background: #FFF;
+            margin: 0 !important;
+            padding: 5px !important;
+        }
+    }
+
+    .character-crafts-table,
+    .character-jobs-table {
+        font-size: 10px;
+        margin: 0;
+        padding: 0;
+        white-space: nowrap;
+
+        tr {
+            line-height: 1.1;
+            vertical-align: top;
+        }
+
+        .heading {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 2px;
+            text-align: center;
+        }
+
+        .name {
+            margin: 0;
+            padding: 0 20px 0 0;
+        }
+
+        .level {
+            margin: 0;
+            padding: 0 5px 0 0;
+            text-align: right;
+        }
+
+        .capped {
+            color: #06F;
+            font-weight: bold;
+        }
+    }
+
+    .character-equip-box {
+        background-color: #EEEEEE;
+        border: 1px solid #DDDDDD;
+        border-collapse: collapse;
+        float: left;
+        height: 130px;
+        margin: 0;
+        width: 130px;
+
+        a {
+            color: #36F;
+            cursor: pointer;
+            font-size: inherit;
+            text-decoration: none;
+        }
+
+        .icon {
+            border: 0;
+            height: 32px;
+            width: 32px;
+        }
+
+        .character-equip-slot {
+            background-image: url('https://static.ffxiah.com/images/equip_box.gif');
+            float: left;
+            height: 32px;
+            width: 32px;
+        }
+    }
+
+    .character-ah-table,
+    .character-bazaar-table {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        .character-ah-heading,
+        .character-bazaar-heading {
+            background: #DFF0D8;
+        }
+
+        .character-ah-headers,
+        .character-bazaar-headers {
+            background: #EEE;
+
+            td {
+                border-bottom: 1px solid #CCC;
+                font-weight: bold;
+                margin: 0;
+                padding: 2px 2px 2px 5px;
+            }
+        }
+
+        .character-ah-items {
+            td {
+                margin: 0;
+                padding: 2px;
+            }
+
+            .icon {
+                text-align: center;
+            }
+
+            .name {
+                padding-left: 5px;
+            }
+        }
+
+        .noitems {
+            color: red;
+            font-style: italic;
+        }
+    }
+}
